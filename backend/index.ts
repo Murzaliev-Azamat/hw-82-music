@@ -1,7 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
-import linksRouter from "./routers/links";
+import artistsRouter from "./routers/artists";
+import albumsRouter from "./routers/albums";
 
 const app = express();
 const port = 8000;
@@ -9,22 +10,20 @@ const port = 8000;
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
-app.use('', linksRouter);
+app.use('', artistsRouter);
+app.use('/albums', albumsRouter);
 
 const run = async () => {
   mongoose.set('strictQuery', false);
-  await mongoose.connect('mongodb://localhost/hw_81');
+  await mongoose.connect('mongodb://localhost/hw_82_music');
 
   app.listen(port, () => {
     console.log('We are live on ' + port);
   });
 
-
   process.on('exit', () => {
     mongoose.disconnect();
   });
 };
-
-
 
 run().catch(console.error);
