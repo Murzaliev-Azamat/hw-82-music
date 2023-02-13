@@ -33,22 +33,6 @@ albumsRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-// artistsRouter.get('/:shortUrl', async (req, res) => {
-//   try {
-//     const result = await Artist.findOne({shortUrl: req.params.shortUrl});
-//
-//     if (!result) {
-//       return res.sendStatus(404);
-//     }
-//
-//     return res.status(301).redirect(result.url)
-//   } catch {
-//     return res.sendStatus(500);
-//   }
-// });
-
-
-
 albumsRouter.post('', imagesUpload.single('image'), async (req, res, next) => {
   const albumData: AlbumMutation = {
     artist: req.body.artist,
