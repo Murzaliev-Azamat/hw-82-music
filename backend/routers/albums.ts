@@ -7,8 +7,6 @@ import {AlbumMutation} from "../types";
 const albumsRouter = express.Router();
 
 albumsRouter.get('', async (req, res, next) => {
-
-  console.log(req.query.artist)
   let artist_id = req.query.artist
 
   if (artist_id) {
