@@ -26,7 +26,7 @@ tracksRouter.post('', async (req, res, next) => {
   const trackData: TrackMutation = {
     album: req.body.album,
     name: req.body.name,
-    time: req.body.year,
+    time: req.body.time,
   };
 
   const track = new Track(trackData);
