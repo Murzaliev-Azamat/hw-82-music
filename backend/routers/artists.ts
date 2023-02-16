@@ -1,5 +1,5 @@
 import express from "express";
-import Artist from "../models/Artists";
+import Artist from "../models/Artist";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import {ArtistWithoutId} from "../types";

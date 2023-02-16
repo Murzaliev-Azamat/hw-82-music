@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import {TrackMutation} from "../types";
-import Track from "../models/Tracks";
+import Track from "../models/Track";
 
 const tracksRouter = express.Router();
 
