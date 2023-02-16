@@ -20,6 +20,12 @@ export interface TrackMutation {
   time: string;
 }
 
+export interface TrackHistoryMutation {
+  user: ObjectId;
+  track: string;
+  datetime: Date;
+}
+
 export interface IUser {
   username: string;
   password: string;
