@@ -5,15 +5,14 @@ import Track from "../models/Track";
 
 const tracksRouter = express.Router();
 
-tracksRouter.get('', async (req, res, next) => {
+tracksRouter.get('/', async (req, res, next) => {
   let album_id = req.query.album
-
-  if (album_id) {
-    const tracks = await Track.find({album: album_id});
-    return res.send(tracks);
-  }
-
   try {
+    if (album_id) {
+      const tracks = await Track.find({album: album_id});
+      return res.send(tracks);
+    }
+
     const tracks = await Track.find();
     return res.send(tracks);
   } catch (e) {
@@ -22,7 +21,7 @@ tracksRouter.get('', async (req, res, next) => {
 });
 
 
-tracksRouter.post('', async (req, res, next) => {
+tracksRouter.post('/', async (req, res, next) => {
   const trackData: TrackMutation = {
     album: req.body.album,
     name: req.body.name,
