@@ -11,13 +11,14 @@ export interface AlbumMutation {
   artist: string;
   name: string;
   image: string | null;
-  year: string;
+  year: number;
 }
 
 export interface TrackMutation {
   album: string;
   name: string;
   time: string;
+  trackNumber: number;
 }
 
 export interface TrackHistoryMutation {
