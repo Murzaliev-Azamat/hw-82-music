@@ -33,16 +33,16 @@ const run = async () => {
 
   const [theEminemShow, encore, americanLife, trueBlue] = await Album.create(
     {
-      name: "The Eminem Show",
-      year: 2002,
-      artist: eminem._id,
-      image: "fixtures/the_eminem_show.jpg"
-    },
-    {
       name: "Encore",
       year: 2004,
       artist: eminem._id,
       image: "fixtures/encore.jpg"
+    },
+    {
+      name: "The Eminem Show",
+      year: 2002,
+      artist: eminem._id,
+      image: "fixtures/the_eminem_show.jpg"
     },
     {
       name: "American Life",
@@ -53,7 +53,7 @@ const run = async () => {
     {
       name: "True Blue",
       year: 1986,
-      artist: eminem._id,
+      artist: madonna._id,
       image: "fixtures/true_blue.jpg"
     },
   );

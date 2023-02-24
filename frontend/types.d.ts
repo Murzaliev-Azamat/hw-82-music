@@ -1,12 +1,19 @@
-export interface Post {
-  id: string;
-  author: string;
-  message: string;
-  image: string | null;
+export interface Artist {
+  _id: string;
+  name: string;
+  image: string;
+  info: string;
 }
 
-export interface PostApi {
-  author: string;
-  message: string;
-  image: File | null;
+export interface Album {
+  _id: string;
+  artist: {
+    id: string;
+    name: string;
+    image: string;
+    info: string;
+  }
+  name: string;
+  year: string;
+  image: string;
 }
