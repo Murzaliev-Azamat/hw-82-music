@@ -14,7 +14,6 @@ albumsRouter.get('/', async (req, res, next) => {
       return res.send(albums);
     }
 
-
     const albums = await Album.find();
     return res.send(albums);
   } catch (e) {

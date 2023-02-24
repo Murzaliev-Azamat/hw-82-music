@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Container } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import Artists from './features/artists/Artists';
