@@ -40,7 +40,19 @@ export interface Track {
 export interface TrackHistory {
   _id: string;
   track: {
-    album: string;
+    _id: string;
+    album: {
+      _id: string;
+      artist: {
+        _id: string;
+        name: string;
+        info: string;
+        image: string;
+      }
+        image: string;
+        name: string;
+        year: number;
+    }
     name: string;
     time: string;
     trackNumber: number;

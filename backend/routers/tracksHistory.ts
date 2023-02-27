@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import {TrackHistoryMutation} from "../types";
 import TrackHistory from "../models/TrackHistory";
 import auth, {RequestWithUser} from "../middleware/auth";
-import Track from "../models/Track";
-import tracksRouter from "./tracks";
 
 const tracksHistoryRouter = express.Router();
 
@@ -13,7 +11,7 @@ tracksHistoryRouter.get('/', auth, async (req, res, next) => {
   const user = (req as RequestWithUser).user;
 
   try {
-    const tracksHistory = await TrackHistory.find({user: user._id}).populate('track').sort({datetime: -1});
+    const tracksHistory = await TrackHistory.find({user: user._id}).populate({path: 'track', populate: {path: 'album', populate: {path: 'artist'}}}).sort({datetime: -1});
     return res.send(tracksHistory);
   } catch (e) {
     return next(e);
