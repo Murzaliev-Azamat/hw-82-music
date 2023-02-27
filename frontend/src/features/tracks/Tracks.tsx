@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { selectFetchAllTracksLoading, selectTracks } from './tracksSlice';
 import { fetchTracks } from './tracksThunks';
 import { selectUser } from '../users/usersSlise';
-import { secret } from '../users/usersThunks';
 import { addTrackToHistory } from '../tracksHistory/tracksHistoryThunks';
 
 const Albums = () => {
@@ -41,7 +40,6 @@ const Albums = () => {
       <>
         {tracks.map((track) => (
           <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-            {/*<img src={apiUrl + '/' + track.image} style={{marginRight: "10px", width: "200px"}}></img>*/}
             <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
             <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
             <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>

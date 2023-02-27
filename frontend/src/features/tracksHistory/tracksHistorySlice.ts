@@ -34,7 +34,7 @@ export const TracksHistorySlice = createSlice({
     builder.addCase(addTrackToHistory.pending, (state) => {
       state.addTracksHistoryLoading = true;
     });
-    builder.addCase(addTrackToHistory.fulfilled, (state, action) => {
+    builder.addCase(addTrackToHistory.fulfilled, (state) => {
       state.addTracksHistoryLoading = false;
     });
     builder.addCase(addTrackToHistory.rejected, (state) => {
@@ -45,5 +45,4 @@ export const TracksHistorySlice = createSlice({
 export const tracksHistoryReducer = TracksHistorySlice.reducer;
 export const selectTracksHistory = (state: RootState) => state.tracksHistory.tracksHistory;
 
-export const selectAddTracksHistoryLoading = (state: RootState) => state.tracksHistory.addTracksHistoryLoading;
 export const selectFetchAllTracksHistoryLoading = (state: RootState) => state.tracksHistory.fetchAllTracksHistoryLoading;

@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import { isAxiosError } from 'axios';
 import { GlobalError, LoginMutation, RegisterMutation, RegisterResponse, User, ValidationError } from '../../../types';
-import { RootState } from '../../app/store';
 
 export const register = createAsyncThunk<User, RegisterMutation, {rejectValue: ValidationError}>(
   'users/register',
@@ -33,16 +32,3 @@ export const login = createAsyncThunk<User, LoginMutation, {rejectValue: GlobalE
     }
   }
 );
-
-export const secret = createAsyncThunk<void, void, {state: RootState}>(
-  'users/secret',
-  async (_, {getState}) => {
-    const user = getState().users.user;
-
-    if (user) {
-      return axiosApi.post('/users/secret', {}, {headers: {'Authorization': user.token}})
-    } else {
-      throw new Error('No user');
-    }
-  }
-)

@@ -1,29 +1,21 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { selectUser } from '../users/usersSlise';
-import { addTrackToHistory, fetchTracksHistory } from './tracksHistoryThunks';
+import { fetchTracksHistory } from './tracksHistoryThunks';
 import { selectFetchAllTracksHistoryLoading, selectTracksHistory } from './tracksHistorySlice';
 import dayjs from 'dayjs';
 
 const Albums = () => {
-  const {id} = useParams();
   const dispatch = useAppDispatch();
   const tracksHistory = useAppSelector(selectTracksHistory);
   const user = useAppSelector(selectUser);
   const fetchAllTracksHistoryLoading = useAppSelector(selectFetchAllTracksHistoryLoading);
 
-
   useEffect(() => {
       dispatch(fetchTracksHistory());
   }, [dispatch]);
-
-  // let artistName = null;
-
-  // if (tracks.length > 0) {
-  //   artistName = tracks[0].album.artist.name
-  // }
 
   if (!user) {
     return <Navigate to="/login" />
@@ -49,7 +41,6 @@ const Albums = () => {
 
   return (
     <div>
-      {/*<h1>{artistName}</h1>*/}
       {info}
     </div>
   );
