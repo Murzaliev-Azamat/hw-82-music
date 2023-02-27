@@ -6,6 +6,7 @@ import { selectFetchAllTracksLoading, selectTracks } from './tracksSlice';
 import { fetchTracks } from './tracksThunks';
 import { selectUser } from '../users/usersSlise';
 import { secret } from '../users/usersThunks';
+import { addTrackToHistory } from '../tracksHistory/tracksHistoryThunks';
 
 const Albums = () => {
   const {id} = useParams();
@@ -44,7 +45,7 @@ const Albums = () => {
             <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
             <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
             <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
-            <button>Play</button>
+            <button onClick={() =>  dispatch(addTrackToHistory(track._id))}>Play</button>
           </div>
         ))}
       </>
