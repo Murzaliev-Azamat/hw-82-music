@@ -37,6 +37,18 @@ export interface Track {
   trackNumber: number;
 }
 
+export interface TrackHistory {
+  _id: string;
+  track: {
+    album: string;
+    name: string;
+    time: string;
+    trackNumber: number;
+  }
+  user: string;
+  datetime: string;
+}
+
 export interface RegisterMutation {
   username: string;
   password: string;

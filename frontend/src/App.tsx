@@ -8,6 +8,7 @@ import AppToolBar from './components/UI/AppToolBar/AppToolBar';
 import Register from './features/users/Register';
 import Login from './features/users/Login';
 import SecretPage from './features/users/SecretPage';
+import TracksHistory from './features/tracksHistory/TracksHistory';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           )}/>
           <Route path="/tracks/:id" element={(
             <Tracks/>
+          )}/>
+          <Route path="/tracks_history" element={(
+            <TracksHistory/>
           )}/>
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />
