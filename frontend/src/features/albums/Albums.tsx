@@ -5,11 +5,13 @@ import { apiUrl } from '../../constants';
 import { Link, useParams } from 'react-router-dom';
 import { selectAlbums, selectFetchAllAlbumsLoading } from './albumsSlice';
 import { fetchAlbums } from './albumsThunks';
+import { selectUser } from '../users/usersSlise';
 
 const Albums = () => {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbums);
+  const user = useAppSelector(selectUser);
   const fetchAllAlbumsLoading = useAppSelector(selectFetchAllAlbumsLoading);
 
   useEffect(() => {
@@ -33,8 +35,8 @@ const Albums = () => {
       <>
         {albums.map((album) => (
           <div key={album._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-            <img src={apiUrl + '/' + album.image} style={{marginRight: "10px", width: "200px"}}></img>
-            <Link to={'/tracks/' + album._id} style={{marginRight: "10px"}}>{album.name}</Link>
+            <img src={apiUrl + '/' + album.image} style={{marginRight: "10px", width: "200px"}} alt="image"></img>
+            <Link to={user ? '/tracks/' + album._id : '/login'} style={{marginRight: "10px"}}>{album.name}</Link>
             <p>{album.year}</p>
           </div>
         ))}
