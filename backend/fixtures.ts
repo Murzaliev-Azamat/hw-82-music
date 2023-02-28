@@ -36,7 +36,7 @@ const run = async () => {
       name: "Encore",
       year: 2004,
       artist: eminem._id,
-      image: "fixtures/encore.jpg"
+      image: "fixtures/encore.jpg",
     },
     {
       name: "The Eminem Show",
@@ -64,6 +64,7 @@ const run = async () => {
       time: "3:14",
       album: theEminemShow._id,
       trackNumber: 1,
+      linkToYoutube: 'bi-8QeEm0HM',
     },
     {
       name: "Business",
@@ -76,6 +77,7 @@ const run = async () => {
       time: "2:18",
       album: theEminemShow._id,
       trackNumber: 2,
+      linkToYoutube: 'HOCdIG3mq1U',
     },
     {
       name: "Say Goodbye Hollywood",
@@ -124,6 +126,7 @@ const run = async () => {
       time: "3:33",
       album: americanLife._id,
       trackNumber: 5,
+      linkToYoutube: 'XS088Opj9o0',
     },
     {
       name: "Hollywood",

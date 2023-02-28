@@ -19,6 +19,7 @@ export interface TrackMutation {
   name: string;
   time: string;
   trackNumber: number;
+  linkToYoutube?: string;
 }
 
 export interface TrackHistoryMutation {

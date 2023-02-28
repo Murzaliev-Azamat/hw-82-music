@@ -27,6 +27,7 @@ tracksRouter.post('/', async (req, res, next) => {
     name: req.body.name,
     time: req.body.time,
     trackNumber: req.body.trackNumber,
+    linkToYoutube: req.body.linkToYoutube || undefined,
   };
 
   const track = new Track(trackData);

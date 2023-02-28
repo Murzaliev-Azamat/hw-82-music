@@ -35,6 +35,7 @@ export interface Track {
   name: string;
   time: string;
   trackNumber: number;
+  linkToYoutube?: string;
 }
 
 export interface TrackHistory {
