@@ -1,6 +1,6 @@
 import express from 'express';
 import User from '../models/User';
-import { Error } from 'mongoose';
+import {Error} from 'mongoose';
 import auth, {RequestWithUser} from "../middleware/auth";
 
 const usersRouter = express.Router();
@@ -52,6 +52,29 @@ usersRouter.post('/secret', auth, async (req, res) => {
     message: 'Secret message',
     username: user.username
   });
+});
+
+usersRouter.delete('/sessions', async (req, res, next) => {
+  try {
+    const token = req.get('Authorization');
+    const success = {message: 'OK'}
+
+    if (!token) {
+      return res.send(success);
+    }
+
+    const user = await User.findOne({token});
+
+    if (!user) {
+      return res.send(success);
+    }
+
+    user.generateToken();
+    await user.save();
+    return res.send(success);
+  } catch (e) {
+    return next(e);
+  }
 });
 
 export default usersRouter;
