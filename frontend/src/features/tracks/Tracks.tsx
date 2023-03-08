@@ -9,12 +9,15 @@ import YouTube from 'react-youtube';
 import YoutubeModal from '../../components/UI/YoutubeModal';
 import { Button } from '@mui/material';
 import { deleteAlbum, fetchAlbums } from '../albums/albumsThunks';
+import { selectUser } from '../users/usersSlise';
 
 const Tracks = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const tracks = useAppSelector(selectTracks);
   const fetchAllTracksLoading = useAppSelector(selectFetchAllTracksLoading);
+  const user = useAppSelector(selectUser)
+
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
   const [linkYoutube, setLinkYoutube] = useState('');
 
@@ -56,7 +59,6 @@ const Tracks = () => {
     },
   };
 
-
   let info = null;
 
   if (fetchAllTracksLoading) {
@@ -70,7 +72,9 @@ const Tracks = () => {
             <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
             <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
             <button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)}>Play</button>
+            {user && user.role === 'admin' && (
             <Button onClick={() => removeTrack(track._id)} variant="contained">Delete</Button>
+              )}
           </div>
         ))}
       </>

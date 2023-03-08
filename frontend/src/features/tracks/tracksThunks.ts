@@ -1,27 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import { Track } from '../../../types';
-import { RootState } from '../../app/store';
 
-export const fetchTracks = createAsyncThunk<Track[], string, {state: RootState}>(
+export const fetchTracks = createAsyncThunk<Track[], string>(
   'tracks/fetchAll',
-  async (id, {getState}) => {
-    const user = getState().users.user;
+  async (id) => {
 
-    if (user) {
-      const tracksResponse = await axiosApi.get<Track[]>('/tracks/?album=' + id, {headers: {'Authorization': user.token}})
-      return tracksResponse.data;
-    } else {
-      throw new Error('No user');
-    }
+    const tracksResponse = await axiosApi.get<Track[]>('/tracks/?album=' + id)
+    return tracksResponse.data;
   }
 );
 
-export const deleteTrack = createAsyncThunk<void, string, {state: RootState }>(
+export const deleteTrack = createAsyncThunk<void, string>(
   'tracks/deleteTrack',
-  async (id, {getState}) => {
-    const token = getState().users.user?.token;
+  async (id) => {
 
-    await axiosApi.delete('/tracks/' + id, {headers: {'Authorization': token}});
+    await axiosApi.delete('/tracks/' + id);
   }
 );

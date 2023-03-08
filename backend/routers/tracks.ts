@@ -5,6 +5,7 @@ import Track from "../models/Track";
 import auth, {RequestWithUser} from "../middleware/auth";
 import Album from "../models/Album";
 import albumsRouter from "./albums";
+import permit from "../middleware/permit";
 
 const tracksRouter = express.Router();
 
@@ -47,7 +48,7 @@ tracksRouter.post('/', auth, async (req, res, next) => {
   }
 });
 
-tracksRouter.delete('/:id', auth, async (req, res, next) => {
+tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
   const user = (req as RequestWithUser).user;
 
   try {

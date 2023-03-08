@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import { Artist } from '../../../types';
-import { RootState } from '../../app/store';
 
 export const fetchArtists = createAsyncThunk<Artist[]>(
   'artists/fetchAll',
@@ -11,11 +10,10 @@ export const fetchArtists = createAsyncThunk<Artist[]>(
   }
 );
 
-export const deleteArtist = createAsyncThunk<void, string, {state: RootState }>(
+export const deleteArtist = createAsyncThunk<void, string>(
   'artists/deleteArtist',
-  async (id, {getState}) => {
-    const token = getState().users.user?.token;
+  async (id) => {
 
-    await axiosApi.delete('/artists/' + id, {headers: {'Authorization': token}});
+    await axiosApi.delete('/artists/' + id);
   }
 );

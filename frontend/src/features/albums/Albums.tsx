@@ -47,7 +47,9 @@ const Albums = () => {
             <img src={apiUrl + '/' + album.image} style={{marginRight: "10px", width: "200px"}} alt="image"></img>
             <Link to={user ? '/tracks/' + album._id : '/login'} style={{marginRight: "10px"}}>{album.name}</Link>
             <p style={{marginRight: "10px"}}>{album.year}</p>
+            {user && user.role === 'admin' && (
             <Button onClick={() => removeAlbum(album._id)} variant="contained">Delete</Button>
+              )}
           </div>
         ))}
       </>

@@ -6,6 +6,7 @@ import {ArtistWithoutId} from "../types";
 import auth, {RequestWithUser} from "../middleware/auth";
 import Album from "../models/Album";
 import Track from "../models/Track";
+import permit from "../middleware/permit";
 
 const artistsRouter = express.Router();
 
@@ -39,7 +40,7 @@ artistsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, nex
   }
 });
 
-artistsRouter.delete('/:id', auth, async (req, res, next) => {
+artistsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
   const user = (req as RequestWithUser).user;
 
   try {
