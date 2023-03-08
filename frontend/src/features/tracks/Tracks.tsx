@@ -3,13 +3,15 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useParams } from 'react-router-dom';
 import { selectFetchAllTracksLoading, selectTracks } from './tracksSlice';
-import { fetchTracks } from './tracksThunks';
+import { deleteTrack, fetchTracks } from './tracksThunks';
 import { addTrackToHistory } from '../tracksHistory/tracksHistoryThunks';
 import YouTube from 'react-youtube';
 import YoutubeModal from '../../components/UI/YoutubeModal';
+import { Button } from '@mui/material';
+import { deleteAlbum, fetchAlbums } from '../albums/albumsThunks';
 
 const Tracks = () => {
-  const {id} = useParams();
+  const params = useParams();
   const dispatch = useAppDispatch();
   const tracks = useAppSelector(selectTracks);
   const fetchAllTracksLoading = useAppSelector(selectFetchAllTracksLoading);
@@ -19,10 +21,17 @@ const Tracks = () => {
   const cancelYoutubeModal = () => setShowYoutubeModal(false);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchTracks(id));
+    if (params.id) {
+      dispatch(fetchTracks(params.id));
     }
   }, [dispatch]);
+
+  const removeTrack = async (id: string) => {
+    await dispatch(deleteTrack(id));
+    if (params.id) {
+      await dispatch(fetchTracks(params.id));
+    }
+  }
 
   let artistName = null;
 
@@ -60,7 +69,8 @@ const Tracks = () => {
             <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
             <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
             <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
-            <button onClick={() => playTrack(track._id, track.linkToYoutube)}>Play</button>
+            <button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)}>Play</button>
+            <Button onClick={() => removeTrack(track._id)} variant="contained">Delete</Button>
           </div>
         ))}
       </>

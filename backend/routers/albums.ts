@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import Album from "../models/Album";
 import {AlbumMutation} from "../types";
+import auth, {RequestWithUser} from "../middleware/auth";
+import Artist from "../models/Artist";
+import Track from "../models/Track";
+import artistsRouter from "./artists";
 
 const albumsRouter = express.Router();
 
@@ -30,7 +34,7 @@ albumsRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
   const albumData: AlbumMutation = {
     artist: req.body.artist,
     name: req.body.name,
@@ -49,6 +53,24 @@ albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
     } else {
       return next(e);
     }
+  }
+});
+
+albumsRouter.delete('/:id', auth, async (req, res, next) => {
+  const user = (req as RequestWithUser).user;
+
+  try {
+    const album = await Album.findOne({_id: req.params.id});
+    if (album) {
+      await Album.deleteOne({_id: album._id});
+      await Track.deleteMany({album: album._id});
+      return res.send("Album deleted");
+    }
+    // else {
+    //   return res.status(403).send("Нельзя удалить чужой продукт");
+    // }
+  } catch (e) {
+    return next(e);
   }
 });
 

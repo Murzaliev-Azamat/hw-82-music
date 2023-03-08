@@ -3,6 +3,9 @@ import Artist from "../models/Artist";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import {ArtistWithoutId} from "../types";
+import auth, {RequestWithUser} from "../middleware/auth";
+import Album from "../models/Album";
+import Track from "../models/Track";
 
 const artistsRouter = express.Router();
 
@@ -15,7 +18,7 @@ artistsRouter.get('/', async (req, res, next) => {
   }
 });
 
-artistsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+artistsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
   const artistData: ArtistWithoutId = {
     name: req.body.name,
     image: req.file ? req.file.filename : null,
@@ -35,5 +38,30 @@ artistsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => 
     }
   }
 });
+
+artistsRouter.delete('/:id', auth, async (req, res, next) => {
+  const user = (req as RequestWithUser).user;
+
+  try {
+    const artist = await Artist.findOne({_id: req.params.id});
+    if (artist) {
+      const albums = await Album.find({artist: artist._id});
+      await Artist.deleteOne({_id: artist._id});
+      await Album.deleteMany({artist: artist._id});
+      if (albums) {
+        for (let album of albums) {
+          await Track.deleteMany({album: album._id});
+        }
+      }
+      return res.send("Artist deleted");
+    }
+    // else {
+    //   return res.status(403).send("Нельзя удалить чужой продукт");
+    // }
+  } catch (e) {
+    return next(e);
+  }
+});
+
 
 export default artistsRouter;

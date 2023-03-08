@@ -24,7 +24,12 @@ const TrackSchema = new Schema({
     type: Number,
     required: true
   },
-  linkToYoutube: String
+  linkToYoutube: String,
+  isPublished: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 
 const Track = mongoose.model('Track', TrackSchema);

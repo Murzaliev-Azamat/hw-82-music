@@ -184,12 +184,19 @@ const run = async () => {
     },
   );
 
-  await User.create({
-    username: "Azamat",
-    email: "azamat92@bk.ru",
-    password: "12345",
-    token: crypto.randomUUID()
-  });
+  await User.create(
+    {
+      username: "Azamat",
+      password: "12345",
+      token: crypto.randomUUID()
+    },
+    {
+      username: "Adilet",
+      password: "333",
+      token: crypto.randomUUID(),
+      role: "admin"
+    }
+  );
 
   await db.close();
 };
