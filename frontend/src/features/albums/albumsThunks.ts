@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import { Album, AlbumApi, ArtistApi } from '../../../types';
+import { Album, AlbumApi } from '../../../types';
 
 export const fetchAlbums = createAsyncThunk<Album[], string | undefined>(
   'albums/fetchAll',
@@ -10,7 +10,7 @@ export const fetchAlbums = createAsyncThunk<Album[], string | undefined>(
       return albumsResponse.data;
     }
 
-    const albumsResponse = await axiosApi.get<Album[]>('/albums/');
+    const albumsResponse = await axiosApi.get<Album[]>('/albums');
     return albumsResponse.data;
   }
 );
@@ -31,6 +31,14 @@ export const addAlbum = createAsyncThunk<void, AlbumApi>(
     });
 
     await axiosApi.post<AlbumApi>('/albums', formData);
+  }
+);
+
+export const publishAlbum = createAsyncThunk<void, string>(
+  'albums/publishAlbum',
+  async (id) => {
+
+    await axiosApi.patch('/albums/' + id + '/togglePublished');
   }
 );
 

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { TrackApi } from '../../../types';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { selectUser } from '../users/usersSlise';
+import { useNavigate } from 'react-router-dom';
 import { selectAlbums } from '../albums/albumsSlice';
 import { addTrack, fetchTracks } from './tracksThunks';
 import { selectAddTrackLoading } from './tracksSlice';
@@ -12,7 +11,6 @@ import { fetchAlbums } from '../albums/albumsThunks';
 const FormForTracks = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const albums = useAppSelector(selectAlbums)
   const addTrackLoading = useAppSelector(selectAddTrackLoading);
 
@@ -21,7 +19,6 @@ const FormForTracks = () => {
     name: '',
     time: '',
     trackNumber: '',
-    isPublished: 'false',
   });
 
   useEffect(() => {
@@ -37,9 +34,8 @@ const FormForTracks = () => {
       name: state.name,
       time: state.time,
       trackNumber: state.trackNumber,
-      isPublished: state.isPublished
     }));
-    setState({album: '', name: '', time: '', trackNumber: '', isPublished: ''});
+    setState({album: '', name: '', time: '', trackNumber: ''});
     await dispatch(fetchTracks(state.album));
     navigate('/tracks/' + state.album);
   };
@@ -59,10 +55,6 @@ const FormForTracks = () => {
       return {...prevState, [name]: value};
     });
   };
-
-  if (!user) {
-    return <Navigate to="/login"/>
-  }
 
   let disabled = false;
 

@@ -3,10 +3,8 @@ import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import Album from "../models/Album";
 import {AlbumMutation} from "../types";
-import auth, {RequestWithUser} from "../middleware/auth";
-import Artist from "../models/Artist";
+import auth from "../middleware/auth";
 import Track from "../models/Track";
-import artistsRouter from "./artists";
 import permit from "../middleware/permit";
 
 const albumsRouter = express.Router();
@@ -57,9 +55,20 @@ albumsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next
   }
 });
 
-albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
-  const user = (req as RequestWithUser).user;
+albumsRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const album = await Album.findOne({_id: req.params.id});
+    if (album) {
+      await Album.updateOne({_id: album._id}, {isPublished: !req.body.isPublished});
+      const updatedAlbum = await Album.findOne({_id: album._id});
+      return res.send(updatedAlbum);
+    }
+  } catch (e) {
+    return next(e);
+  }
+});
 
+albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
   try {
     const album = await Album.findOne({_id: req.params.id});
     if (album) {
@@ -67,9 +76,6 @@ albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
       await Track.deleteMany({album: album._id});
       return res.send("Album deleted");
     }
-    // else {
-    //   return res.status(403).send("Нельзя удалить чужой продукт");
-    // }
   } catch (e) {
     return next(e);
   }

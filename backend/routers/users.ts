@@ -1,7 +1,6 @@
 import express from 'express';
 import User from '../models/User';
 import {Error} from 'mongoose';
-import auth, {RequestWithUser} from "../middleware/auth";
 
 const usersRouter = express.Router();
 
@@ -44,15 +43,6 @@ usersRouter.post('/sessions', async (req, res) => {
   return res.send({message: 'Username and password correct!', user});
 });
 
-
-usersRouter.post('/secret', auth, async (req, res) => {
-  const user = (req as RequestWithUser).user;
-
-  return res.send({
-    message: 'Secret message',
-    username: user.username
-  });
-});
 
 usersRouter.delete('/sessions', async (req, res, next) => {
   try {

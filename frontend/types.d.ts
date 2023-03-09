@@ -3,13 +3,13 @@ export interface Artist {
   name: string;
   image: string;
   info: string;
+  isPublished: boolean;
 }
 
 export interface ArtistApi {
   name: string;
   image: File | null;
   info: string;
-  isPublished: string;
 }
 
 export interface Album {
@@ -23,6 +23,7 @@ export interface Album {
   name: string;
   year: string;
   image: string;
+  isPublished: boolean;
 }
 
 
@@ -31,7 +32,6 @@ export interface AlbumApi {
   name: string;
   year: string;
   image: File | null;
-  isPublished: string;
 }
 
 export interface Track {
@@ -52,6 +52,7 @@ export interface Track {
   time: string;
   trackNumber: number;
   linkToYoutube?: string;
+  isPublished: boolean;
 }
 
 export interface TrackApi {
@@ -60,7 +61,6 @@ export interface TrackApi {
   time: string;
   trackNumber: string;
   linkToYoutube?: string;
-  isPublished: string;
 }
 
 export interface TrackHistory {

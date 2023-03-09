@@ -3,7 +3,7 @@ import Artist from "../models/Artist";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import {ArtistWithoutId} from "../types";
-import auth, {RequestWithUser} from "../middleware/auth";
+import auth from "../middleware/auth";
 import Album from "../models/Album";
 import Track from "../models/Track";
 import permit from "../middleware/permit";
@@ -40,9 +40,7 @@ artistsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, nex
   }
 });
 
-artistsRouter.put('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
-  const user = (req as RequestWithUser).user;
-
+artistsRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
   try {
     const artist = await Artist.findOne({_id: req.params.id});
     if (artist) {
@@ -50,35 +48,13 @@ artistsRouter.put('/:id/togglePublished', auth, permit('admin'), async (req, res
       const updatedArtist = await Artist.findOne({_id: artist._id});
       return res.send(updatedArtist);
     }
-      // else {
-    //   return res.status(403).send("Нельзя редактировать чужую задачу");
-    // }
   } catch (e) {
     return next(e);
   }
 });
 
 
-// tasksRouter.put('/:id', auth, async (req, res, next) => {
-//   const user = (req as RequestWithUser).user;
-//
-//   try {
-//     const task = await Task.findOne({user: user._id, _id: req.params.id});
-//     if (task) {
-//       await Task.updateOne({user: task.user, _id: task._id}, {status: req.body.status});
-//       const updatedTask = await Task.findOne({user: task.user, _id: task._id});
-//       return res.send(updatedTask);
-//     } else {
-//       return res.status(403).send("Нельзя редактировать чужую задачу");
-//     }
-//   } catch (e) {
-//     return next(e);
-//   }
-// });
-
 artistsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
-  const user = (req as RequestWithUser).user;
-
   try {
     const artist = await Artist.findOne({_id: req.params.id});
     if (artist) {
@@ -92,9 +68,6 @@ artistsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
       }
       return res.send("Artist deleted");
     }
-    // else {
-    //   return res.status(403).send("Нельзя удалить чужой продукт");
-    // }
   } catch (e) {
     return next(e);
   }

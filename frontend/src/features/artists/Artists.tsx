@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { deleteArtist, fetchArtists } from './artistsThunks';
+import { deleteArtist, fetchArtists, publishArtist } from './artistsThunks';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectArtists, selectFetchAllArtistsLoading } from './artistsSlice';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -23,6 +23,11 @@ const Artists = () => {
     await dispatch(fetchArtists());
   }
 
+  const publish = async (id: string) => {
+    await dispatch(publishArtist(id));
+    await dispatch(fetchArtists());
+  }
+
   let info = null;
 
   if (fetchAllArtistsLoading) {
@@ -30,15 +35,26 @@ const Artists = () => {
   } else {
     info = (
       <>
-        {artists.map((artist) => (
+        {artists.map((artist) => {
+          if (!artist.isPublished && user && user.role !== 'admin' || !artist.isPublished && !user) {
+            return
+          }
+          return (
           <div key={artist._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-            <img src={apiUrl + '/' +artist.image} style={{marginRight: "10px", width: "200px"}}></img>
+            <img src={apiUrl + '/' +artist.image} style={{marginRight: "10px", width: "200px"}} alt="image"></img>
             <Link to={'/albums/' + artist._id} style={{marginRight: "10px"}}>{artist.name}</Link>
             {user && user.role === 'admin' && (
             <Button onClick={() => removeArtist(artist._id)} variant="contained">Delete</Button>
             )}
+            {user && user.role === 'admin' && !artist.isPublished && (
+              <>
+              <p style={{color: "red", marginRight: "10px"}}>Неопубликовано</p>
+              <Button onClick={() => publish(artist._id)} variant="contained">Опубликовать</Button>
+              </>
+            )}
           </div>
-        ))}
+        )
+        })}
       </>
     )
   }

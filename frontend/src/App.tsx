@@ -20,27 +20,28 @@ function App() {
 
   return (
     <div className="App">
-      <Container maxWidth="sm" sx={{mt: 2}}>
-        <AppToolBar/>
-        <Grid container sx={{mb: 2}}>
-          <Grid item xs={2}>
-            <NavLink to={'/add-artist'}>Add artist</NavLink>
+      <AppToolBar/>
+      <Container maxWidth="md" sx={{mt: 2}}>
+        {user && (
+          <Grid container sx={{mb: 2}}>
+            <Grid item xs={2}>
+              <NavLink to={'/add-artist'}>Add artist</NavLink>
+            </Grid>
+            <Grid item xs={2}>
+              <NavLink to={'/add-album'}>Add album</NavLink>
+            </Grid>
+            <Grid item xs={2}>
+              <NavLink to={'/add-track'}>Add track</NavLink>
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
-            <NavLink to={'/add-album'}>Add album</NavLink>
-          </Grid>
-          <Grid item xs={2}>
-            <NavLink to={'/add-track'}>Add track</NavLink>
-          </Grid>
-        </Grid>
+        )}
         <Routes>
           <Route path="/" element={<Artists/>}/>
-          <Route path="/" element={(
-            <ProtectedRoute isAllowed={user && user.role === 'admin'}>
-              <Artists/>
+          <Route path="/add-artist" element={(
+            <ProtectedRoute isAllowed={user && user.role === 'admin' || user && user.role === 'user'}>
+            <FormForArtists/>
             </ProtectedRoute>
           )}/>
-          <Route path="/add-artist" element={<FormForArtists/>}/>
           <Route path="/albums/:id" element={<Albums/>}/>
           <Route path="/add-album" element={<FormForAlbums/>}/>
           <Route path="/tracks/:id" element={<Tracks/>}/>

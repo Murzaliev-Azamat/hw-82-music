@@ -2,9 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import {TrackMutation} from "../types";
 import Track from "../models/Track";
-import auth, {RequestWithUser} from "../middleware/auth";
-import Album from "../models/Album";
-import albumsRouter from "./albums";
+import auth from "../middleware/auth";
 import permit from "../middleware/permit";
 
 const tracksRouter = express.Router();
@@ -48,18 +46,26 @@ tracksRouter.post('/', auth, async (req, res, next) => {
   }
 });
 
-tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
-  const user = (req as RequestWithUser).user;
+tracksRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
+  try {
+    const track = await Track.findOne({_id: req.params.id});
+    if (track) {
+      await Track.updateOne({_id: track._id}, {isPublished: !req.body.isPublished});
+      const updatedTrack = await Track.findOne({_id: track._id});
+      return res.send(updatedTrack);
+    }
+  } catch (e) {
+    return next(e);
+  }
+});
 
+tracksRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
   try {
     const track = await Track.findOne({_id: req.params.id});
     if (track) {
       await Track.deleteOne({_id: track._id});
       return res.send("Track deleted");
     }
-    // else {
-    //   return res.status(403).send("Нельзя удалить чужой продукт");
-    // }
   } catch (e) {
     return next(e);
   }

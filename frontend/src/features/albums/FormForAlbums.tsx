@@ -3,8 +3,7 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEv
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import FileInput from '../../components/UI/FileInput/FileInput';
 import { AlbumApi } from '../../../types';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { selectUser } from '../users/usersSlise';
+import { useNavigate } from 'react-router-dom';
 import { addAlbum, fetchAlbums } from './albumsThunks';
 import { selectAddAlbumLoading } from './albumsSlice';
 import { selectArtists } from '../artists/artistsSlice';
@@ -12,7 +11,6 @@ import { selectArtists } from '../artists/artistsSlice';
 const FormForAlbums = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const artists = useAppSelector(selectArtists)
   const addAlbumLoading = useAppSelector(selectAddAlbumLoading);
 
@@ -21,7 +19,6 @@ const FormForAlbums = () => {
     name: '',
     year: '',
     image: null,
-    isPublished: 'false',
   });
 
   const submitFormHandler = async (e: React.FormEvent) => {
@@ -31,9 +28,8 @@ const FormForAlbums = () => {
       name: state.name,
       year: state.year,
       image: state.image,
-      isPublished: state.isPublished
     }));
-    setState({artist: '', name: '', year: '', image: null, isPublished: ''});
+    setState({artist: '', name: '', year: '', image: null});
     await dispatch(fetchAlbums(state.artist));
     navigate('/albums/' + state.artist);
   };
@@ -66,10 +62,6 @@ const FormForAlbums = () => {
       }))
     }
   };
-
-  if (!user) {
-    return <Navigate to="/login"/>
-  }
 
   let disabled = false;
 

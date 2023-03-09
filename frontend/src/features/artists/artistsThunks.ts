@@ -10,23 +10,6 @@ export const fetchArtists = createAsyncThunk<Artist[]>(
   }
 );
 
-// export const addPost = createAsyncThunk<void, PostApi>(
-//   'posts/add',
-//   async (post) => {
-//     const formData = new FormData();
-//
-//     const keys = Object.keys(post) as (keyof PostApi)[];
-//     keys.forEach(key => {
-//       const value = post[key];
-//
-//       if (value !== null) {
-//         formData.append(key, value);
-//       }
-//     });
-//
-//     await axiosApi.post<PostApi>('/posts', formData);
-//   }
-// );
 
 export const addArtist = createAsyncThunk<void, ArtistApi>(
   'artists/addArtist',
@@ -47,18 +30,14 @@ export const addArtist = createAsyncThunk<void, ArtistApi>(
   }
 );
 
-// export const addComment = createAsyncThunk<void, CommentApi, { state: RootState }>(
-//   'comments/add',
-//   async (comment, {getState}) => {
-//     const user = getState().users.user;
-//
-//     if (user) {
-//       await axiosApi.post<CommentApi>('/comments', comment, {headers: {'Authorization': user.token}});
-//     } else {
-//       throw new Error('No user');
-//     }
-//   }
-// );
+export const publishArtist = createAsyncThunk<void, string>(
+  'artists/publishArtist',
+  async (id) => {
+
+    await axiosApi.patch('/artists/' + id + '/togglePublished');
+  }
+);
+
 
 export const deleteArtist = createAsyncThunk<void, string>(
   'artists/deleteArtist',

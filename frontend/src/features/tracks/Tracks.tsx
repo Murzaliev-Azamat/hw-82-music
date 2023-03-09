@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useParams } from 'react-router-dom';
 import { selectFetchAllTracksLoading, selectTracks } from './tracksSlice';
-import { deleteTrack, fetchTracks } from './tracksThunks';
+import { deleteTrack, fetchTracks, publishTrack } from './tracksThunks';
 import { addTrackToHistory } from '../tracksHistory/tracksHistoryThunks';
 import YouTube from 'react-youtube';
 import YoutubeModal from '../../components/UI/YoutubeModal';
@@ -50,6 +50,11 @@ const Tracks = () => {
     }
   }
 
+  const publish = async (id: string) => {
+    await dispatch(publishTrack(id));
+    await dispatch(fetchTracks(params.id));
+  }
+
   const opts = {
     height: '200',
     width: '400',
@@ -65,17 +70,29 @@ const Tracks = () => {
   } else {
     info = (
       <>
-        {tracks.map((track) => (
-          <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-            <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
-            <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
-            <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
-            <button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)}>Play</button>
-            {user && user.role === 'admin' && (
-            <Button onClick={() => removeTrack(track._id)} variant="contained">Delete</Button>
+        {tracks.map((track) => {
+          if (!track.isPublished && user && user.role !== 'admin' || !track.isPublished && !user) {
+            return
+          }
+          return (
+            <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
+              <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
+              <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
+              <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
+              <button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)}>Play
+              </button>
+              {user && user.role === 'admin' && (
+                <Button onClick={() => removeTrack(track._id)} variant="contained">Delete</Button>
               )}
-          </div>
-        ))}
+              {user && user.role === 'admin' && !track.isPublished && (
+                <>
+                  <p style={{color: "red", marginRight: "10px"}}>Неопубликовано</p>
+                  <Button onClick={() => publish(track._id)} variant="contained">Опубликовать</Button>
+                </>
+              )}
+            </div>
+          )
+        })}
       </>
     )
   }

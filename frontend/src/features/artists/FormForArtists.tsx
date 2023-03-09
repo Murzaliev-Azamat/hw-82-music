@@ -3,22 +3,19 @@ import { Button, Grid, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import FileInput from '../../components/UI/FileInput/FileInput';
 import { ArtistApi } from '../../../types';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { selectUser } from '../users/usersSlise';
+import { useNavigate } from 'react-router-dom';
 import { addArtist, fetchArtists } from './artistsThunks';
 import { selectAddArtistLoading } from './artistsSlice';
 
 const FormForArtists = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const addArtistLoading = useAppSelector(selectAddArtistLoading);
 
   const [state, setState] = useState<ArtistApi>({
     name: '',
     info: '',
     image: null,
-    isPublished: 'false',
   });
 
   const submitFormHandler = async (e: React.FormEvent) => {
@@ -27,9 +24,8 @@ const FormForArtists = () => {
       name: state.name,
       info: state.info,
       image: state.image,
-      isPublished: state.isPublished
     }));
-    setState({name: '', info: '', image: null, isPublished: ''});
+    setState({name: '', info: '', image: null});
     await dispatch(fetchArtists());
     navigate('/');
   };
@@ -54,10 +50,6 @@ const FormForArtists = () => {
       }))
     }
   };
-
-  if (!user) {
-    return <Navigate to="/login" />
-  }
 
   let disabled = false;
 
