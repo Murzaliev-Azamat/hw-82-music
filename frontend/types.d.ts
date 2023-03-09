@@ -5,6 +5,13 @@ export interface Artist {
   info: string;
 }
 
+export interface ArtistApi {
+  name: string;
+  image: File | null;
+  info: string;
+  isPublished: string;
+}
+
 export interface Album {
   _id: string;
   artist: {
@@ -16,6 +23,15 @@ export interface Album {
   name: string;
   year: string;
   image: string;
+}
+
+
+export interface AlbumApi {
+  artist: string;
+  name: string;
+  year: string;
+  image: File | null;
+  isPublished: string;
 }
 
 export interface Track {
@@ -36,6 +52,15 @@ export interface Track {
   time: string;
   trackNumber: number;
   linkToYoutube?: string;
+}
+
+export interface TrackApi {
+  album: string;
+  name: string;
+  time: string;
+  trackNumber: string;
+  linkToYoutube?: string;
+  isPublished: string;
 }
 
 export interface TrackHistory {

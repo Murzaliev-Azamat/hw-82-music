@@ -3,11 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { apiUrl } from '../../constants';
 import { Link, useParams } from 'react-router-dom';
-import { selectAlbums, selectFetchAllAlbumsLoading } from './albumsSlice';
+import { selectAlbums, selectFetchAllAlbumsLoading} from './albumsSlice';
 import { deleteAlbum, fetchAlbums } from './albumsThunks';
 import { selectUser } from '../users/usersSlise';
 import { Button } from '@mui/material';
-import { deleteArtist, fetchArtists } from '../artists/artistsThunks';
 
 const Albums = () => {
   const params = useParams();
@@ -16,11 +15,12 @@ const Albums = () => {
   const user = useAppSelector(selectUser);
   const fetchAllAlbumsLoading = useAppSelector(selectFetchAllAlbumsLoading);
 
+
   useEffect(() => {
     if (params.id) {
       dispatch(fetchAlbums(params.id));
     }
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   const removeAlbum = async (id: string) => {
     await dispatch(deleteAlbum(id));

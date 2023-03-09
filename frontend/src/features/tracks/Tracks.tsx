@@ -8,7 +8,6 @@ import { addTrackToHistory } from '../tracksHistory/tracksHistoryThunks';
 import YouTube from 'react-youtube';
 import YoutubeModal from '../../components/UI/YoutubeModal';
 import { Button } from '@mui/material';
-import { deleteAlbum, fetchAlbums } from '../albums/albumsThunks';
 import { selectUser } from '../users/usersSlise';
 
 const Tracks = () => {

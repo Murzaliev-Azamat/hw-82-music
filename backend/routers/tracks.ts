@@ -30,7 +30,7 @@ tracksRouter.post('/', auth, async (req, res, next) => {
     album: req.body.album,
     name: req.body.name,
     time: req.body.time,
-    trackNumber: req.body.trackNumber,
+    trackNumber: Number(req.body.trackNumber),
     linkToYoutube: req.body.linkToYoutube || undefined,
   };
 
