@@ -3,7 +3,6 @@ import { Button, Menu, MenuItem, styled } from '@mui/material';
 import { User } from '../../../../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
-import { unsetUser } from '../../../features/users/usersSlise';
 import { logout } from '../../../features/users/usersThunks';
 
 interface Props {

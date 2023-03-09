@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import Artists from './features/artists/Artists';
 import Albums from './features/albums/Albums';
@@ -25,13 +25,13 @@ function App() {
         {user && (
           <Grid container sx={{mb: 2}}>
             <Grid item xs={2}>
-              <NavLink to={'/add-artist'}>Add artist</NavLink>
+              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-artist'}>Add artist</Button>
             </Grid>
             <Grid item xs={2}>
-              <NavLink to={'/add-album'}>Add album</NavLink>
+              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-album'}>Add album</Button>
             </Grid>
             <Grid item xs={2}>
-              <NavLink to={'/add-track'}>Add track</NavLink>
+              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-track'}>Add track</Button>
             </Grid>
           </Grid>
         )}

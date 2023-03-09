@@ -52,17 +52,19 @@ const Albums = () => {
             return
           }
           return (
-            <div key={album._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
+            <div key={album._id} style={{display: "flex", alignItems: "center", marginBottom: "15px", position: "relative"}}>
               <img src={apiUrl + '/' + album.image} style={{marginRight: "10px", width: "200px"}} alt="image"></img>
               <Link to={user ? '/tracks/' + album._id : '/login'} style={{marginRight: "10px"}}>{album.name}</Link>
-              <p style={{marginRight: "10px"}}>{album.year}</p>
+              <p style={{marginRight: "10px", marginBottom: "0"}}>{album.year}</p>
               {user && user.role === 'admin' && (
-                <Button onClick={() => removeAlbum(album._id)} variant="contained">Delete</Button>
+                <Button onClick={() => removeAlbum(album._id)} variant="contained" style={{marginRight: "10px"}}>Delete</Button>
               )}
               {user && user.role === 'admin' && !album.isPublished && (
                 <>
-                  <p style={{color: "red", marginRight: "10px"}}>Неопубликовано</p>
-                  <Button onClick={() => publish(album._id)} variant="contained">Опубликовать</Button>
+                  <div style={{backgroundColor: "white", width: "185px", height: "25px", position: "absolute", top: '5%', left: "1%"}}>
+                    <p style={{color: 'red'}}>Неопубликовано</p>
+                  </div>
+                  <Button onClick={() => publish(album._id)} variant="contained" color="success">Опубликовать</Button>
                 </>
               )}
             </div>

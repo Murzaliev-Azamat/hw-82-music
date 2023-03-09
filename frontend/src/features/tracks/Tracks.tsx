@@ -76,18 +76,18 @@ const Tracks = () => {
           }
           return (
             <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-              <p style={{marginRight: "10px"}}>{track.trackNumber}</p>
-              <p style={{marginRight: "10px", color: "green"}}>{track.name}</p>
-              <p style={{marginRight: "10px"}}>{track.time + " minutes"}</p>
-              <button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)}>Play
-              </button>
+              <p style={{marginRight: "10px", marginBottom: "0"}}>{track.trackNumber}</p>
+              <p style={{marginRight: "10px", color: "green", marginBottom: "0"}}>{track.name}</p>
+              <p style={{marginRight: "10px", marginBottom: "0"}}>{track.time + " minutes"}</p>
+              <Button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)} variant="contained" color="warning">Play
+              </Button>
               {user && user.role === 'admin' && (
-                <Button onClick={() => removeTrack(track._id)} variant="contained">Delete</Button>
+                <Button onClick={() => removeTrack(track._id)} variant="contained" style={{marginRight: "10px"}}>Delete</Button>
               )}
               {user && user.role === 'admin' && !track.isPublished && (
                 <>
-                  <p style={{color: "red", marginRight: "10px"}}>Неопубликовано</p>
-                  <Button onClick={() => publish(track._id)} variant="contained">Опубликовать</Button>
+                  <Button onClick={() => publish(track._id)} variant="contained" color="success" style={{marginRight: "10px"}}>Опубликовать</Button>
+                  <p style={{color: "red"}}>Неопубликовано</p>
                 </>
               )}
             </div>
