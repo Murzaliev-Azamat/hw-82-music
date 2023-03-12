@@ -3,7 +3,6 @@ import { Artist } from '../../../types';
 import { RootState } from '../../app/store';
 import { addArtist, fetchArtists } from './artistsThunks';
 
-
 interface ArtistsState {
   artists: Artist[] | [];
   fetchAllArtistsLoading: boolean;
@@ -14,7 +13,7 @@ const initialState: ArtistsState = {
   artists: [],
   fetchAllArtistsLoading: false,
   addArtistLoading: false,
-}
+};
 
 export const ArtistsSlice = createSlice({
   name: 'artists',
@@ -40,7 +39,8 @@ export const ArtistsSlice = createSlice({
     builder.addCase(addArtist.rejected, (state) => {
       state.addArtistLoading = false;
     });
-  }});
+  },
+});
 
 export const artistsReducer = ArtistsSlice.reducer;
 export const selectArtists = (state: RootState) => state.artists.artists;

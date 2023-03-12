@@ -20,36 +20,66 @@ function App() {
 
   return (
     <div className="App">
-      <AppToolBar/>
-      <Container maxWidth="md" sx={{mt: 2}}>
+      <AppToolBar />
+      <Container maxWidth="md" sx={{ mt: 2 }}>
         {user && (
-          <Grid container sx={{mb: 2}}>
+          <Grid container sx={{ mb: 2 }}>
             <Grid item xs={2}>
-              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-artist'}>Add artist</Button>
+              <Button
+                component={NavLink}
+                variant="contained"
+                size="small"
+                disableElevation
+                style={{ color: 'white' }}
+                to={'/add-artist'}
+              >
+                Add artist
+              </Button>
             </Grid>
             <Grid item xs={2}>
-              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-album'}>Add album</Button>
+              <Button
+                component={NavLink}
+                variant="contained"
+                size="small"
+                disableElevation
+                style={{ color: 'white' }}
+                to={'/add-album'}
+              >
+                Add album
+              </Button>
             </Grid>
             <Grid item xs={2}>
-              <Button component={NavLink} variant="contained" size="small" disableElevation style={{color: "white"}} to={'/add-track'}>Add track</Button>
+              <Button
+                component={NavLink}
+                variant="contained"
+                size="small"
+                disableElevation
+                style={{ color: 'white' }}
+                to={'/add-track'}
+              >
+                Add track
+              </Button>
             </Grid>
           </Grid>
         )}
         <Routes>
-          <Route path="/" element={<Artists/>}/>
-          <Route path="/add-artist" element={(
-            <ProtectedRoute isAllowed={user && user.role === 'admin' || user && user.role === 'user'}>
-            <FormForArtists/>
-            </ProtectedRoute>
-          )}/>
-          <Route path="/albums/:id" element={<Albums/>}/>
-          <Route path="/add-album" element={<FormForAlbums/>}/>
-          <Route path="/tracks/:id" element={<Tracks/>}/>
-          <Route path="/add-track" element={<FormForTracks/>}/>
-          <Route path="/tracks_history" element={<TracksHistory/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="*" element={<span>Такой страницы не существует</span>}/>
+          <Route path="/" element={<Artists />} />
+          <Route
+            path="/add-artist"
+            element={
+              <ProtectedRoute isAllowed={(user && user.role === 'admin') || (user && user.role === 'user')}>
+                <FormForArtists />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/albums/:id" element={<Albums />} />
+          <Route path="/add-album" element={<FormForAlbums />} />
+          <Route path="/tracks/:id" element={<Tracks />} />
+          <Route path="/add-track" element={<FormForTracks />} />
+          <Route path="/tracks_history" element={<TracksHistory />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<span>Такой страницы не существует</span>} />
         </Routes>
       </Container>
     </div>

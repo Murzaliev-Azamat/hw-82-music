@@ -14,36 +14,32 @@ const Albums = () => {
   const fetchAllTracksHistoryLoading = useAppSelector(selectFetchAllTracksHistoryLoading);
 
   useEffect(() => {
-      dispatch(fetchTracksHistory());
+    dispatch(fetchTracksHistory());
   }, [dispatch]);
 
   if (!user) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" />;
   }
 
   let info = null;
 
   if (fetchAllTracksHistoryLoading) {
-    info = <Spinner/>
+    info = <Spinner />;
   } else {
     info = (
       <>
         {tracksHistory.map((track) => (
-          <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-            <p style={{marginRight: "10px", color: "blue"}}>{track.track.album.artist.name}</p>
-            <p style={{marginRight: "10px", color: "green"}}>{track.track.name}</p>
-            <p style={{marginRight: "10px"}}>{dayjs(track.datetime).format('DD.MM.YYYY HH:mm:ss')}</p>
+          <div key={track._id} style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+            <p style={{ marginRight: '10px', color: 'blue' }}>{track.track.album.artist.name}</p>
+            <p style={{ marginRight: '10px', color: 'green' }}>{track.track.name}</p>
+            <p style={{ marginRight: '10px' }}>{dayjs(track.datetime).format('DD.MM.YYYY HH:mm:ss')}</p>
           </div>
         ))}
       </>
-    )
+    );
   }
 
-  return (
-    <div>
-      {info}
-    </div>
-  );
+  return <div>{info}</div>;
 };
 
 export default Albums;

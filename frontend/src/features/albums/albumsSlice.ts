@@ -3,7 +3,6 @@ import { Album } from '../../../types';
 import { RootState } from '../../app/store';
 import { addAlbum, fetchAlbums } from './albumsThunks';
 
-
 interface AlbumsState {
   albums: Album[] | [];
   fetchAllAlbumsLoading: boolean;
@@ -14,7 +13,7 @@ const initialState: AlbumsState = {
   albums: [],
   fetchAllAlbumsLoading: false,
   addAlbumLoading: false,
-}
+};
 
 export const AlbumsSlice = createSlice({
   name: 'albums',
@@ -40,7 +39,8 @@ export const AlbumsSlice = createSlice({
     builder.addCase(addAlbum.rejected, (state) => {
       state.addAlbumLoading = false;
     });
-  }});
+  },
+});
 
 export const albumsReducer = AlbumsSlice.reducer;
 export const selectAlbums = (state: RootState) => state.albums.albums;

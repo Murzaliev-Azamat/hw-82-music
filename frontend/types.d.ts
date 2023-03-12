@@ -19,13 +19,12 @@ export interface Album {
     name: string;
     image: string;
     info: string;
-  }
+  };
   name: string;
   year: string;
   image: string;
   isPublished: boolean;
 }
-
 
 export interface AlbumApi {
   artist: string;
@@ -43,11 +42,11 @@ export interface Track {
       name: string;
       image: string;
       info: string;
-    }
+    };
     name: string;
     year: string;
     image: string;
-  }
+  };
   name: string;
   time: string;
   trackNumber: number;
@@ -74,15 +73,15 @@ export interface TrackHistory {
         name: string;
         info: string;
         image: string;
-      }
-        image: string;
-        name: string;
-        year: number;
-    }
+      };
+      image: string;
+      name: string;
+      year: number;
+    };
     name: string;
     time: string;
     trackNumber: number;
-  }
+  };
   user: string;
   datetime: string;
 }
@@ -109,8 +108,8 @@ export interface ValidationError {
     [key: string]: {
       name: string;
       message: string;
-    }
-  },
+    };
+  };
   message: string;
   name: string;
   _name: string;

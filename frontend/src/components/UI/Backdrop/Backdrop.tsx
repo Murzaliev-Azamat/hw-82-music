@@ -5,12 +5,8 @@ interface BackdropProps {
   onClick?: React.MouseEventHandler;
 }
 
-const Backdrop: React.FC<BackdropProps> = ({show, onClick}) => {
-  return (
-    <div className="modal-backdrop show" style={{display: show ? 'block' : 'none'}} onClick={onClick}/>
-  );
+const Backdrop: React.FC<BackdropProps> = ({ show, onClick }) => {
+  return <div className="modal-backdrop show" style={{ display: show ? 'block' : 'none' }} onClick={onClick} />;
 };
-
-
 
 export default Backdrop;

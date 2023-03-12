@@ -20,12 +20,14 @@ const FormForArtists = () => {
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(addArtist({
-      name: state.name,
-      info: state.info,
-      image: state.image,
-    }));
-    setState({name: '', info: '', image: null});
+    await dispatch(
+      addArtist({
+        name: state.name,
+        info: state.info,
+        image: state.image,
+      }),
+    );
+    setState({ name: '', info: '', image: null });
     await dispatch(fetchArtists());
     navigate('/');
   };
@@ -33,21 +35,23 @@ const FormForArtists = () => {
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
-    setState(prevState => {
-      return {...prevState, [name]: value};
+    setState((prevState) => {
+      return { ...prevState, [name]: value };
     });
   };
 
   const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, files} = e.target;
+    const { name, files } = e.target;
     if (files && files[0]) {
-      setState(prevState => ({
-        ...prevState, [name]: files[0]
+      setState((prevState) => ({
+        ...prevState,
+        [name]: files[0],
       }));
     } else {
-      setState(prevState => ({
-        ...prevState, [name]: null,
-      }))
+      setState((prevState) => ({
+        ...prevState,
+        [name]: null,
+      }));
     }
   };
 
@@ -58,14 +62,12 @@ const FormForArtists = () => {
   }
 
   return (
-    <form
-      autoComplete="off"
-      onSubmit={submitFormHandler}
-    >
-      <Grid item container justifyContent="space-between" alignItems="center" xs sx={{mb: 1}}>
+    <form autoComplete="off" onSubmit={submitFormHandler}>
+      <Grid item container justifyContent="space-between" alignItems="center" xs sx={{ mb: 1 }}>
         <TextField
-          sx={{width: '100%'}}
-          id="name" label="Name"
+          sx={{ width: '100%' }}
+          id="name"
+          label="Name"
           value={state.name}
           onChange={inputChangeHandler}
           name="name"
@@ -73,12 +75,14 @@ const FormForArtists = () => {
         />
       </Grid>
 
-      <Grid container direction="column" spacing={2} sx={{mb: 1}}>
+      <Grid container direction="column" spacing={2} sx={{ mb: 1 }}>
         <Grid item xs>
           <TextField
-            sx={{width: 1}}
-            multiline rows={3}
-            id="info" label="Info"
+            sx={{ width: 1 }}
+            multiline
+            rows={3}
+            id="info"
+            label="Info"
             value={state.info}
             onChange={inputChangeHandler}
             name="info"
@@ -86,11 +90,7 @@ const FormForArtists = () => {
         </Grid>
 
         <Grid item xs>
-          <FileInput
-            onChange={fileInputChangeHandler}
-            name="image"
-            label="Image"
-          />
+          <FileInput onChange={fileInputChangeHandler} name="image" label="Image" />
         </Grid>
       </Grid>
 
@@ -99,7 +99,6 @@ const FormForArtists = () => {
       </Button>
     </form>
   );
-
 };
 
 export default FormForArtists;

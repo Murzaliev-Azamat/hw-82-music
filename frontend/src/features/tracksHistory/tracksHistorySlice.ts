@@ -3,7 +3,6 @@ import { RootState } from '../../app/store';
 import { TrackHistory } from '../../../types';
 import { addTrackToHistory, fetchTracksHistory } from './tracksHistoryThunks';
 
-
 interface TracksHistoryState {
   tracksHistory: TrackHistory[] | [];
   addTracksHistoryLoading: boolean;
@@ -14,7 +13,7 @@ const initialState: TracksHistoryState = {
   tracksHistory: [],
   addTracksHistoryLoading: false,
   fetchAllTracksHistoryLoading: false,
-}
+};
 
 export const TracksHistorySlice = createSlice({
   name: 'tracksHistory',
@@ -40,9 +39,11 @@ export const TracksHistorySlice = createSlice({
     builder.addCase(addTrackToHistory.rejected, (state) => {
       state.addTracksHistoryLoading = false;
     });
-  }});
+  },
+});
 
 export const tracksHistoryReducer = TracksHistorySlice.reducer;
 export const selectTracksHistory = (state: RootState) => state.tracksHistory.tracksHistory;
 
-export const selectFetchAllTracksHistoryLoading = (state: RootState) => state.tracksHistory.fetchAllTracksHistoryLoading;
+export const selectFetchAllTracksHistoryLoading = (state: RootState) =>
+  state.tracksHistory.fetchAllTracksHistoryLoading;

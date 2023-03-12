@@ -12,7 +12,7 @@ const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
   const fetchAllArtistsLoading = useAppSelector(selectFetchAllArtistsLoading);
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchArtists());
@@ -21,51 +21,65 @@ const Artists = () => {
   const removeArtist = async (id: string) => {
     await dispatch(deleteArtist(id));
     await dispatch(fetchArtists());
-  }
+  };
 
   const publish = async (id: string) => {
     await dispatch(publishArtist(id));
     await dispatch(fetchArtists());
-  }
+  };
 
   let info = null;
 
   if (fetchAllArtistsLoading) {
-    info = <Spinner/>
+    info = <Spinner />;
   } else {
     info = (
       <>
         {artists.map((artist) => {
-          if (!artist.isPublished && user && user.role !== 'admin' || !artist.isPublished && !user) {
-            return
+          if ((!artist.isPublished && user && user.role !== 'admin') || (!artist.isPublished && !user)) {
+            return;
           }
           return (
-            <div key={artist._id} style={{display: 'flex', alignItems: 'center', marginBottom: '15px', position: "relative"}}>
-              <img src={apiUrl + '/' + artist.image} style={{marginRight: '10px', width: '200px'}} alt="image"></img>
-              <Link to={'/albums/' + artist._id} style={{marginRight: '10px'}}>{artist.name}</Link>
+            <div
+              key={artist._id}
+              style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', position: 'relative' }}
+            >
+              <img src={apiUrl + '/' + artist.image} style={{ marginRight: '10px', width: '200px' }} alt="image"></img>
+              <Link to={'/albums/' + artist._id} style={{ marginRight: '10px' }}>
+                {artist.name}
+              </Link>
               {user && user.role === 'admin' && (
-                <Button onClick={() => removeArtist(artist._id)} variant="contained" style={{marginRight: '10px'}}>Delete</Button>
+                <Button onClick={() => removeArtist(artist._id)} variant="contained" style={{ marginRight: '10px' }}>
+                  Delete
+                </Button>
               )}
               {user && user.role === 'admin' && !artist.isPublished && (
                 <>
-                  <div style={{backgroundColor: "white", width: "185px", height: "25px", position: "absolute", top: '5%', left: "1%"}}>
-                    <p style={{color: 'red'}}>Неопубликовано</p>
+                  <div
+                    style={{
+                      backgroundColor: 'white',
+                      width: '185px',
+                      height: '25px',
+                      position: 'absolute',
+                      top: '5%',
+                      left: '1%',
+                    }}
+                  >
+                    <p style={{ color: 'red' }}>Неопубликовано</p>
                   </div>
-                  <Button onClick={() => publish(artist._id)} variant="contained" color="success">Опубликовать</Button>
+                  <Button onClick={() => publish(artist._id)} variant="contained" color="success">
+                    Опубликовать
+                  </Button>
                 </>
               )}
             </div>
-          )
+          );
         })}
       </>
-    )
+    );
   }
 
-  return (
-    <div>
-      {info}
-    </div>
-  );
+  return <div>{info}</div>;
 };
 
 export default Artists;

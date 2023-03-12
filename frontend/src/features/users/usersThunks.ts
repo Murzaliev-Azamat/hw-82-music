@@ -6,7 +6,7 @@ import { unsetUser } from './usersSlise';
 
 export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: ValidationError }>(
   'users/register',
-  async (registerMutation, {rejectWithValue}) => {
+  async (registerMutation, { rejectWithValue }) => {
     try {
       const response = await axiosApi.post<RegisterResponse>('/users', registerMutation);
       return response.data.user;
@@ -16,12 +16,12 @@ export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: 
       }
       throw e;
     }
-  }
+  },
 );
 
 export const login = createAsyncThunk<User, LoginMutation, { rejectValue: GlobalError }>(
   'users/login',
-  async (loginMutation, {rejectWithValue}) => {
+  async (loginMutation, { rejectWithValue }) => {
     try {
       const response = await axiosApi.post<RegisterResponse>('/users/sessions', loginMutation);
       return response.data.user;
@@ -31,14 +31,10 @@ export const login = createAsyncThunk<User, LoginMutation, { rejectValue: Global
       }
       throw e;
     }
-  }
+  },
 );
 
-export const logout = createAsyncThunk(
-  'users/logout',
-  async (_, {dispatch}) => {
-
-    await axiosApi.delete('/users/sessions');
-    dispatch(unsetUser());
-  }
-);
+export const logout = createAsyncThunk('users/logout', async (_, { dispatch }) => {
+  await axiosApi.delete('/users/sessions');
+  dispatch(unsetUser());
+});

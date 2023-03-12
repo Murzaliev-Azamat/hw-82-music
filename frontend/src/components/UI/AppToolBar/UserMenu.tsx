@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, styled } from '@mui/material';
+import { Button, Menu, MenuItem } from '@mui/material';
 import { User } from '../../../../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
@@ -9,7 +9,7 @@ interface Props {
   user: User;
 }
 
-const UserMenu: React.FC<Props> = ({user}) => {
+const UserMenu: React.FC<Props> = ({ user }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -28,20 +28,14 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Button
-        onClick={handleClick}
-        color="inherit"
-      >
+      <Button onClick={handleClick} color="inherit">
         Hello, {user.username}
       </Button>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem>Profile</MenuItem>
-        <MenuItem component={Link} to={'/tracks_history'}>Track History</MenuItem>
+        <MenuItem component={Link} to={'/tracks_history'}>
+          Track History
+        </MenuItem>
         <MenuItem>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>

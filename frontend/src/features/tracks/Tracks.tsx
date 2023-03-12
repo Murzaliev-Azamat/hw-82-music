@@ -15,7 +15,7 @@ const Tracks = () => {
   const dispatch = useAppDispatch();
   const tracks = useAppSelector(selectTracks);
   const fetchAllTracksLoading = useAppSelector(selectFetchAllTracksLoading);
-  const user = useAppSelector(selectUser)
+  const user = useAppSelector(selectUser);
 
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
   const [linkYoutube, setLinkYoutube] = useState('');
@@ -26,19 +26,19 @@ const Tracks = () => {
     if (params.id) {
       dispatch(fetchTracks(params.id));
     }
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   const removeTrack = async (id: string) => {
     await dispatch(deleteTrack(id));
     if (params.id) {
       await dispatch(fetchTracks(params.id));
     }
-  }
+  };
 
   let artistName = null;
 
   if (tracks.length > 0) {
-    artistName = tracks[0].album.artist.name
+    artistName = tracks[0].album.artist.name;
   }
 
   const playTrack = async (id: string, link?: string) => {
@@ -48,12 +48,12 @@ const Tracks = () => {
       setShowYoutubeModal(true);
       setLinkYoutube(link);
     }
-  }
+  };
 
   const publish = async (id: string) => {
     await dispatch(publishTrack(id));
     await dispatch(fetchTracks(params.id));
-  }
+  };
 
   const opts = {
     height: '200',
@@ -66,35 +66,50 @@ const Tracks = () => {
   let info = null;
 
   if (fetchAllTracksLoading) {
-    info = <Spinner/>
+    info = <Spinner />;
   } else {
     info = (
       <>
         {tracks.map((track) => {
-          if (!track.isPublished && user && user.role !== 'admin' || !track.isPublished && !user) {
-            return
+          if ((!track.isPublished && user && user.role !== 'admin') || (!track.isPublished && !user)) {
+            return;
           }
           return (
-            <div key={track._id} style={{display: "flex", alignItems: "center", marginBottom: "15px"}}>
-              <p style={{marginRight: "10px", marginBottom: "0"}}>{track.trackNumber}</p>
-              <p style={{marginRight: "10px", color: "green", marginBottom: "0"}}>{track.name}</p>
-              <p style={{marginRight: "10px", marginBottom: "0"}}>{track.time + " minutes"}</p>
-              <Button style={{marginRight: "10px"}} onClick={() => playTrack(track._id, track.linkToYoutube)} variant="contained" color="warning">Play
+            <div key={track._id} style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+              <p style={{ marginRight: '10px', marginBottom: '0' }}>{track.trackNumber}</p>
+              <p style={{ marginRight: '10px', color: 'green', marginBottom: '0' }}>{track.name}</p>
+              <p style={{ marginRight: '10px', marginBottom: '0' }}>{track.time + ' minutes'}</p>
+              <Button
+                style={{ marginRight: '10px' }}
+                onClick={() => playTrack(track._id, track.linkToYoutube)}
+                variant="contained"
+                color="warning"
+              >
+                Play
               </Button>
               {user && user.role === 'admin' && (
-                <Button onClick={() => removeTrack(track._id)} variant="contained" style={{marginRight: "10px"}}>Delete</Button>
+                <Button onClick={() => removeTrack(track._id)} variant="contained" style={{ marginRight: '10px' }}>
+                  Delete
+                </Button>
               )}
               {user && user.role === 'admin' && !track.isPublished && (
                 <>
-                  <Button onClick={() => publish(track._id)} variant="contained" color="success" style={{marginRight: "10px"}}>Опубликовать</Button>
-                  <p style={{color: "red"}}>Неопубликовано</p>
+                  <Button
+                    onClick={() => publish(track._id)}
+                    variant="contained"
+                    color="success"
+                    style={{ marginRight: '10px' }}
+                  >
+                    Опубликовать
+                  </Button>
+                  <p style={{ color: 'red' }}>Неопубликовано</p>
                 </>
               )}
             </div>
-          )
+          );
         })}
       </>
-    )
+    );
   }
 
   return (
@@ -103,10 +118,12 @@ const Tracks = () => {
       {info}
       <YoutubeModal show={showYoutubeModal} title="Расширенный фильтр" onClose={cancelYoutubeModal}>
         <div className="modal-body">
-          <YouTube videoId={linkYoutube} opts={opts}/>
+          <YouTube videoId={linkYoutube} opts={opts} />
         </div>
         <div className="modal-footer">
-          <button className="btn btn-danger" onClick={cancelYoutubeModal}>Cancel</button>
+          <button className="btn btn-danger" onClick={cancelYoutubeModal}>
+            Cancel
+          </button>
         </div>
       </YoutubeModal>
     </div>

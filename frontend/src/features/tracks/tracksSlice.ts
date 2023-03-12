@@ -3,7 +3,6 @@ import { RootState } from '../../app/store';
 import { Track } from '../../../types';
 import { addTrack, fetchTracks } from './tracksThunks';
 
-
 interface TracksState {
   tracks: Track[] | [];
   fetchAllTracksLoading: boolean;
@@ -14,7 +13,7 @@ const initialState: TracksState = {
   tracks: [],
   fetchAllTracksLoading: false,
   addTrackLoading: false,
-}
+};
 
 export const TracksSlice = createSlice({
   name: 'tracks',
@@ -40,7 +39,8 @@ export const TracksSlice = createSlice({
     builder.addCase(addTrack.rejected, (state) => {
       state.addTrackLoading = false;
     });
-  }});
+  },
+});
 
 export const tracksReducer = TracksSlice.reducer;
 export const selectTracks = (state: RootState) => state.tracks.tracks;
