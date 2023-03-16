@@ -11,7 +11,7 @@ interface IUserMethods {
   generateToken(): void;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+type UserModel = Model<IUser, Record<string, never>, IUserMethods>;
 
 const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   username: {
@@ -27,7 +27,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
         const user: HydratedDocument<IUser> | null = await User.findOne({
           username,
         });
-        return !Boolean(user);
+        return !user;
       },
       message: "This user is already registered",
     },
