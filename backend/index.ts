@@ -1,6 +1,6 @@
-import cors from 'cors';
-import express from 'express';
-import mongoose from 'mongoose';
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
 import artistsRouter from "./routers/artists";
 import albumsRouter from "./routers/albums";
 import tracksRouter from "./routers/tracks";
@@ -12,23 +12,23 @@ const app = express();
 const port = 8000;
 
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(express.json());
-app.use('/artists', artistsRouter);
-app.use('/albums', albumsRouter);
-app.use('/tracks', tracksRouter);
-app.use('/users', usersRouter);
-app.use('/track_history', tracksHistoryRouter);
+app.use("/artists", artistsRouter);
+app.use("/albums", albumsRouter);
+app.use("/tracks", tracksRouter);
+app.use("/users", usersRouter);
+app.use("/track_history", tracksHistoryRouter);
 
 const run = async () => {
-  mongoose.set('strictQuery', false);
+  mongoose.set("strictQuery", false);
   await mongoose.connect(config.db);
 
   app.listen(port, () => {
-    console.log('We are live on ' + port);
+    console.log("We are live on " + port);
   });
 
-  process.on('exit', () => {
+  process.on("exit", () => {
     mongoose.disconnect();
   });
 };
