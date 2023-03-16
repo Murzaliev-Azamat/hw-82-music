@@ -89,11 +89,13 @@ export interface TrackHistory {
 export interface RegisterMutation {
   username: string;
   password: string;
+  displayName: string;
 }
 
 export interface User {
   _id: string;
   username: string;
+  displayName: string;
   token: string;
   role: string;
 }

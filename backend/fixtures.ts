@@ -1,35 +1,38 @@
-import crypto from 'crypto';
-import mongoose from 'mongoose';
-import config from './config';
-import User from './models/User';
+import crypto from "crypto";
+import mongoose from "mongoose";
+import config from "./config";
+import User from "./models/User";
 import Artist from "./models/Artist";
 import Album from "./models/Album";
 import Track from "./models/Track";
 
 const run = async () => {
-  mongoose.set('strictQuery', false);
+  mongoose.set("strictQuery", false);
   await mongoose.connect(config.db);
   const db = mongoose.connection;
 
   try {
-    await db.dropCollection('albums');
-    await db.dropCollection('artists');
-    await db.dropCollection('trackhistories');
-    await db.dropCollection('tracks');
-    await db.dropCollection('users');
+    await db.dropCollection("albums");
+    await db.dropCollection("artists");
+    await db.dropCollection("trackhistories");
+    await db.dropCollection("tracks");
+    await db.dropCollection("users");
   } catch (e) {
-    console.log('Collections were not present, skipping drop...');
+    console.log("Collections were not present, skipping drop...");
   }
 
-  const [eminem, madonna] = await Artist.create({
-    name: "Eminem",
-    image: "fixtures/eminem.jpg",
-    info: "Rap singer"
-  }, {
-    name: "Madonna",
-    image: "fixtures/madonna.jpg",
-    info: "Pop singer"
-  });
+  const [eminem, madonna] = await Artist.create(
+    {
+      name: "Eminem",
+      image: "fixtures/eminem.jpg",
+      info: "Rap singer",
+    },
+    {
+      name: "Madonna",
+      image: "fixtures/madonna.jpg",
+      info: "Pop singer",
+    }
+  );
 
   const [theEminemShow, encore, americanLife, trueBlue] = await Album.create(
     {
@@ -42,20 +45,20 @@ const run = async () => {
       name: "The Eminem Show",
       year: 2002,
       artist: eminem._id,
-      image: "fixtures/the_eminem_show.jpg"
+      image: "fixtures/the_eminem_show.jpg",
     },
     {
       name: "American Life",
       year: 2003,
       artist: madonna._id,
-      image: "fixtures/american_life.jpg"
+      image: "fixtures/american_life.jpg",
     },
     {
       name: "True Blue",
       year: 1986,
       artist: madonna._id,
-      image: "fixtures/true_blue.jpg"
-    },
+      image: "fixtures/true_blue.jpg",
+    }
   );
 
   await Track.create(
@@ -64,7 +67,7 @@ const run = async () => {
       time: "3:14",
       album: theEminemShow._id,
       trackNumber: 1,
-      linkToYoutube: 'bi-8QeEm0HM',
+      linkToYoutube: "bi-8QeEm0HM",
     },
     {
       name: "Business",
@@ -77,7 +80,7 @@ const run = async () => {
       time: "2:18",
       album: theEminemShow._id,
       trackNumber: 2,
-      linkToYoutube: 'HOCdIG3mq1U',
+      linkToYoutube: "HOCdIG3mq1U",
     },
     {
       name: "Say Goodbye Hollywood",
@@ -126,7 +129,7 @@ const run = async () => {
       time: "3:33",
       album: americanLife._id,
       trackNumber: 5,
-      linkToYoutube: 'XS088Opj9o0',
+      linkToYoutube: "XS088Opj9o0",
     },
     {
       name: "Hollywood",
@@ -181,20 +184,22 @@ const run = async () => {
       time: "3:47",
       album: trueBlue._id,
       trackNumber: 1,
-    },
+    }
   );
 
   await User.create(
     {
       username: "Azamat",
       password: "12345",
-      token: crypto.randomUUID()
+      displayName: "Aza",
+      token: crypto.randomUUID(),
     },
     {
       username: "Adilet",
       password: "333",
+      displayName: "Adik",
       token: crypto.randomUUID(),
-      role: "admin"
+      role: "admin",
     }
   );
 
