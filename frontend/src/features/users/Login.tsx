@@ -3,7 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Alert, Avatar, Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { login } from './usersThunks';
+import { googleLogin, login } from './usersThunks';
 import { selectLoginError } from './usersSlise';
 import { LoginMutation } from '../../../types';
 import { GoogleLogin } from '@react-oauth/google';
@@ -29,6 +29,12 @@ const Login = () => {
     navigate('/');
   };
 
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+
+    navigate('/');
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -48,7 +54,9 @@ const Login = () => {
         <Box sx={{ pt: 2 }}>
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              console.log(credentialResponse);
+              if (credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
             }}
             onError={() => {
               console.log('Login Failed');
