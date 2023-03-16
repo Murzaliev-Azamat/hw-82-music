@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Avatar, Button, Grid, Menu, MenuItem } from '@mui/material';
 import { User } from '../../../../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { logout } from '../../../features/users/usersThunks';
+import { apiUrl } from '../../../constants';
 
 interface Props {
   user: User;
@@ -28,9 +29,16 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 
   return (
     <>
-      <Button onClick={handleClick} color="inherit">
-        Hello, {user.displayName}
-      </Button>
+      <Grid container justifyContent="space-between" alignItems="center">
+        <Grid item>
+          <Button onClick={handleClick} color="inherit">
+            Hello, {user.displayName}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Avatar alt="Avatar" src={user.image} />
+        </Grid>
+      </Grid>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem>Profile</MenuItem>
         <MenuItem component={Link} to={'/tracks_history'}>

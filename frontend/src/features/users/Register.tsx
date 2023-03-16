@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { register } from './usersThunks';
 import { selectRegisterError } from './usersSlise';
 import { RegisterMutation } from '../../../types';
+import FileInput from '../../components/UI/FileInput/FileInput';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const Register = () => {
     username: '',
     password: '',
     displayName: '',
+    image: null,
   });
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +32,21 @@ const Register = () => {
       navigate('/');
     } catch (e) {
       // error happened
+    }
+  };
+
+  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+    if (files && files[0]) {
+      setState((prevState) => ({
+        ...prevState,
+        [name]: files[0],
+      }));
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        [name]: null,
+      }));
     }
   };
 
@@ -93,6 +110,9 @@ const Register = () => {
                 error={Boolean(getFieldError('password'))}
                 helperText={getFieldError('password')}
               />
+            </Grid>
+            <Grid item xs>
+              <FileInput onChange={fileInputChangeHandler} name="image" label="Image" />
             </Grid>
           </Grid>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

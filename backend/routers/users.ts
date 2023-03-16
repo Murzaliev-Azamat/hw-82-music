@@ -4,17 +4,19 @@ import { Error } from "mongoose";
 import { OAuth2Client } from "google-auth-library";
 import config from "../config";
 import crypto from "crypto";
+import { imagesUpload } from "../multer";
 
 const usersRouter = express.Router();
 
 const client = new OAuth2Client(config.google.clientId);
 
-usersRouter.post("/", async (req, res, next) => {
+usersRouter.post("/", imagesUpload.single("image"), async (req, res, next) => {
   try {
     const user = new User({
       username: req.body.username,
       password: req.body.password,
       displayName: req.body.displayName,
+      image: req.file ? "http://localhost:8000/" + req.file.filename : null,
     });
 
     user.generateToken();
@@ -64,6 +66,7 @@ usersRouter.post("/google", async (req, res, next) => {
     const email = payload["email"];
     const googleId = payload["sub"];
     const displayName = payload["name"];
+    const image = payload["picture"];
 
     if (!email) {
       return res
@@ -79,6 +82,7 @@ usersRouter.post("/google", async (req, res, next) => {
         password: crypto.randomUUID(),
         googleID: googleId,
         displayName,
+        image,
       });
     }
 

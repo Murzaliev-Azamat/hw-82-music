@@ -90,12 +90,14 @@ export interface RegisterMutation {
   username: string;
   password: string;
   displayName: string;
+  image: File | null;
 }
 
 export interface User {
   _id: string;
   username: string;
   displayName: string;
+  image?: string;
   token: string;
   role: string;
 }

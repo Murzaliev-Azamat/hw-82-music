@@ -7,6 +7,7 @@ import { googleLogin, login } from './usersThunks';
 import { selectLoginError } from './usersSlise';
 import { LoginMutation } from '../../../types';
 import { GoogleLogin } from '@react-oauth/google';
+import FileInput from '../../components/UI/FileInput/FileInput';
 
 const Login = () => {
   const dispatch = useAppDispatch();
