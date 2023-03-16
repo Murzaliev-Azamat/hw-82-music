@@ -5,7 +5,7 @@ export interface Artist {
   info: string;
 }
 
-export type ArtistWithoutId = Omit<Artist, 'id'>;
+export type ArtistWithoutId = Omit<Artist, "id">;
 
 export interface AlbumMutation {
   artist: string;
@@ -33,4 +33,6 @@ export interface IUser {
   password: string;
   token: string;
   role: string;
+  displayName?: string;
+  googleId?: string;
 }
