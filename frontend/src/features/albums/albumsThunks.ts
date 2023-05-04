@@ -15,14 +15,22 @@ export const fetchAlbums = createAsyncThunk<Album[], string | undefined>('albums
 export const addAlbum = createAsyncThunk<void, AlbumApi>('albums/addAlbum', async (album) => {
   const formData = new FormData();
 
-  const keys = Object.keys(album) as (keyof AlbumApi)[];
-  keys.forEach((key) => {
-    const value = album[key];
+  formData.append('artist', album.artist);
+  formData.append('name', album.name);
+  formData.append('year', album.year);
 
-    if (value !== null) {
-      formData.append(key, value);
-    }
-  });
+  if (album.image) {
+    formData.append('image', album.image);
+  }
+
+  // const keys = Object.keys(album) as (keyof AlbumApi)[];
+  // keys.forEach((key) => {
+  //   const value = album[key];
+  //
+  //   if (value !== null) {
+  //     formData.append(key, value);
+  //   }
+  // });
 
   await axiosApi.post<AlbumApi>('/albums', formData);
 });

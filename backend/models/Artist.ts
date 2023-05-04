@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const ArtistSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   image: String,
   info: String,
@@ -12,16 +12,8 @@ const ArtistSchema = new Schema({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 });
 
-const Artist = mongoose.model('Artist', ArtistSchema);
+const Artist = mongoose.model("Artist", ArtistSchema);
 export default Artist;
-
-
-
-
-
-
-
-
